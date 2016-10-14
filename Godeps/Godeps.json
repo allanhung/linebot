@@ -1,13 +1,43 @@
 {
-	"ImportPath": ".",
+	"ImportPath": "github.com/allanhung/linebot",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v74",
 	"Packages": [
 		"./..."
 	],
-  "Deps": [
-    {
-      "ImportPath": "github.com/line/line-bot-sdk-go/linebot"
-    }
-  ]
+	"Deps": [
+		{
+			"ImportPath": "github.com/line/line-bot-sdk-go/examples/echo_bot",
+			"Comment": "1.0.0-25-gb14d924",
+			"Rev": "b14d9243d665ec79d12f50a6f8e0c3571d4134b7"
+		},
+		{
+			"ImportPath": "github.com/line/line-bot-sdk-go/examples/echo_bot_handler",
+			"Comment": "1.0.0-25-gb14d924",
+			"Rev": "b14d9243d665ec79d12f50a6f8e0c3571d4134b7"
+		},
+		{
+			"ImportPath": "github.com/line/line-bot-sdk-go/examples/kitchensink",
+			"Comment": "1.0.0-25-gb14d924",
+			"Rev": "b14d9243d665ec79d12f50a6f8e0c3571d4134b7"
+		},
+		{
+			"ImportPath": "github.com/line/line-bot-sdk-go/linebot",
+			"Comment": "1.0.0-25-gb14d924",
+			"Rev": "b14d9243d665ec79d12f50a6f8e0c3571d4134b7"
+		},
+		{
+			"ImportPath": "github.com/line/line-bot-sdk-go/linebot/httphandler",
+			"Comment": "1.0.0-25-gb14d924",
+			"Rev": "b14d9243d665ec79d12f50a6f8e0c3571d4134b7"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "8b4af36cd21a1f85a7484b49feb7c79363106d8e"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "8b4af36cd21a1f85a7484b49feb7c79363106d8e"
+		}
+	]
 }
