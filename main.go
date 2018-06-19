@@ -39,7 +39,7 @@ func main() {
             if event.Type == linebot.EventTypeMessage {
                 switch message := event.Message.(type) {
                 case *linebot.TextMessage:
-                    reply_msg := fmt.Sprintf("Your Token: %s\nyou type: %s\nmessage id: %s\ngroup_id:%s\nroom_id:%s", event.ReplyToken, message.Text, message.ID, event.Source.GroupID, event.Source.RoomID)
+                    reply_msg := fmt.Sprintf("Your Token: %s\nyou type: %s\nmessage id: %s\nuser_id:%s\ngroup_id:%s\nroom_id:%s", event.ReplyToken, message.Text, message.ID, event.Source.UserID, event.Source.GroupID, event.Source.RoomID)
                     if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_msg)).Do(); err != nil {
                         log.Print(err)
                     }
