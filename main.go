@@ -48,5 +48,15 @@ func main() {
         }
     })
 
+    router.POST("/mysql", func(c *gin.Context) {
+        buf  := make([]byte, 1024)  
+        n, _ := c.Request.Body.Read(buf) 
+        body := string(buf[0:n])
+
+        if _, err := bot.PushMessage("96911779b0fc4755aa72608b53173986", linebot.NewTextMessage(body)).Do(); err != nil {
+            log.Print(err)
+        }
+    }
+
     router.Run(":" + port)
 }
