@@ -56,7 +56,7 @@ func main() {
         if _, err := bot.PushMessage("96911779b0fc4755aa72608b53173986", linebot.NewTextMessage(body)).Do(); err != nil {
             log.Print(err)
         }
-    }
+    })
 
     router.Run(":" + port)
 }
