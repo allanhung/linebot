@@ -2,8 +2,8 @@ package main
 
 import (
     "log"
-    "net/http"
     "os"
+    "fmt"
 
     "github.com/gin-gonic/gin"
     "github.com/line/line-bot-sdk-go/linebot"
