@@ -17,51 +17,51 @@ package main
 import (
   "html"
   "fmt"
-	"log"
-	"net/http"
-	"os"
-
-	"github.com/line/line-bot-sdk-go/linebot"
+  "log"
+  "net/http"
+  "os"
+  "github.com/line/line-bot-sdk-go/linebot"
 )
 
 func main() {
-	bot, err := linebot.New(
-		os.Getenv("CHANNEL_SECRET"),
-		os.Getenv("CHANNEL_TOKEN"),
-	)
-	if err != nil {
-		log.Fatal(err)
-	}
+  bot, err := linebot.New(
+    os.Getenv("CHANNEL_SECRET"),
+    os.Getenv("CHANNEL_TOKEN"),
+  )
+  if err != nil {
+    log.Fatal(err)
+  }
 
   http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
   })
 
-	// Setup HTTP Server for receiving requests from LINE platform
-	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		events, err := bot.ParseRequest(req)
-		if err != nil {
-			if err == linebot.ErrInvalidSignature {
-				w.WriteHeader(400)
-			} else {
-				w.WriteHeader(500)
-			}
-			return
-		}
-		for _, event := range events {
-			if event.Type == linebot.EventTypeMessage {
-				switch message := event.Message.(type) {
-				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
-						log.Print(err)
-					}
-				}
-			}
-		}
-	})
-	// This is just a sample code.
-	// For actually use, you must support HTTPS by using `ListenAndServeTLS`, reverse proxy or etc.
-	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
-		log.Fatal(err)
-	}
+  // Setup HTTP Server for receiving requests from LINE platform
+  http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
+    events, err := bot.ParseRequest(req)
+    if err != nil {
+      if err == linebot.ErrInvalidSignature {
+        w.WriteHeader(400)
+      } else {
+        w.WriteHeader(500)
+      }
+      return
+    }
+    for _, event := range events {
+      if event.Type == linebot.EventTypeMessage {
+        switch message := event.Message.(type) {
+        case *linebot.TextMessage:
+          reply_message := fmt.Sprintf("%s[%s]", "test", message.Text)
+          if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_message)).Do(); err != nil {
+            log.Print(err)
+          }
+        }
+      }
+    }
+  })
+  // This is just a sample code.
+  // For actually use, you must support HTTPS by using `ListenAndServeTLS`, reverse proxy or etc.
+  if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
+    log.Fatal(err)
+  }
 }
