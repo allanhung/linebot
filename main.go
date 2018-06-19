@@ -40,7 +40,7 @@ func main() {
                 switch message := event.Message.(type) {
                 case *linebot.TextMessage:
                     reply_msg := fmt.Sprintf("You Type:  %s", message.Text)
-                    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+                    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(reply_msg)).Do(); err != nil {
                         log.Print(err)
                     }
                 }
