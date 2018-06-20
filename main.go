@@ -2,12 +2,23 @@ package main
 
 import (
     "log"
+    "net/http"
+    "encoding/json"
     "os"
     "fmt"
 
     "github.com/gin-gonic/gin"
     "github.com/line/line-bot-sdk-go/linebot"
 )
+
+func parsejson(raw []byte) map[string]interface{} {
+    result := make(map[string]interface{})
+    err := json.Unmarshal(raw, &result)
+    if err != nil {
+        log.Fatal("json decode failed")
+    }
+    return result
+}
 
 func main() {
     port := os.Getenv("PORT")
@@ -48,7 +59,28 @@ func main() {
         }
     })
 
-    router.POST("/mysql", func(c *gin.Context) {
+    router.POST("/tt", func(c *gin.Context) {
+        buf  := make([]byte, 1024)  
+        n, _ := c.Request.Body.Read(buf) 
+        jsonbody := parsejson(buf[0:n])
+        var return_body string
+        for k, v := range jsonbody {
+            return_body = fmt.Sprintf("%s_%s_%s",return_body,k,v)
+        }
+        c.String(http.StatusOK, "Hello%s", return_body)
+    })
+
+    router.POST("/json", func(c *gin.Context) {
+        buf  := make([]byte, 1024)  
+        n, _ := c.Request.Body.Read(buf) 
+        jsonbody := parsejson(buf[0:n])
+
+        if _, err := bot.PushMessage(jsonbody["roomid"].(string), linebot.NewTextMessage(jsonbody["msg"].(string))).Do(); err != nil {
+            log.Print(err)
+        }
+    })
+
+    router.POST("/raw", func(c *gin.Context) {
         buf  := make([]byte, 1024)  
         n, _ := c.Request.Body.Read(buf) 
         body := string(buf[0:n])
